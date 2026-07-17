@@ -1,25 +1,14 @@
-import secrets
-from flask import Flask, render_template, request, redirect, abort
+from flask import Flask, render_template, request #render_template es una clase importada
+#request es el objeto que trae datos enviados por el navegador
+app= Flask(__name__) #inicializando aplicacion
 
-app = Flask(__name__)
+@app.route('/', methods=['GET', 'POST']) #esto es un decorador indicando que es la ruta raiz. Indicamos que acepte GET y POST
 
-short_urls = {}
-
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    if request.method == 'POST':
-        url = request.form['URLusuario']
-        short_id = secrets.token_urlsafe(4)
-        short_urls[short_id] = url
-        short_url = request.host_url.rstrip('/') + '/' + short_id
-        return render_template('index.html', short_url=short_url, original_url=url)
+def index(): #esto es una vista que se expresa en forma de funcion
+    if request.method== 'POST':
+        url =request.form['URLusuario']
+        return f"Recibi la URL: {url}"
     return render_template('index.html')
 
-@app.route('/<short_id>')
-def redirect_short_url(short_id):
-    if short_id in short_urls:
-        return redirect(short_urls[short_id])
-    return abort(404)
-
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+if __name__=='__main__': #comprobamos que si estamos desde el archivo main 
+    app.run(debug=True, port=5000)  #entonces ejecutamos la aplicacion
