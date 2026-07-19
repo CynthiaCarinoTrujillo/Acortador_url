@@ -16,7 +16,8 @@ def index(): #esto es una vista que se expresa en forma de funcion
         url =request.form['URLusuario']
         url_corta= generar_url_corta()
         urls_dict[url_corta]= url
-        return f"URL corta: {url_corta}"
+        url_corta_completa=f"www.{url_corta}.com"
+        return f"URL: {url_corta_completa}"
     return render_template('index.html')
 
 @app.route('/<codigo>')
