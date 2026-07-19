@@ -1,14 +1,79 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <style>
+        html,body{
+            height: 100%;
+            margin:0;
+        }
+
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center ;
+            justify-content: center;
+            background: rgba(181, 129, 230, 0.242);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #header-box, #form-box{
+            width: min(90%, 450px);
+        }
+
+        #header-box{
+            border: 3px solid red;
+            padding: 24px 32px;
+            border-radius: 8px;
+            background: #ffffff;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(181, 129, 230, 0.35);
+            margin-bottom: 24px;
+        }
+
+        #form-box{
+            text-align: center;
+        }
+
+        #form-box form{
+            border: 3px solid red;
+            border-radius: 8px;
+            padding: 22px 24px;
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(181, 129, 230, 0.242);
+        }
+
+        #form-box input {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        #form-box button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: red;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
     <meta charset="UTF-8">
     <title>Esto es prueba del acortador</title>
 </head>
 <body>
-    <p>Acortador URL</p>
+<div id="header-box">
+    <h1>Acortador URL</h1>
+</div>
+
+<div id="form-box"> 
 <form method="post"> <!--Indica al navegador que envíe los datos usando POST-->
 <input name="URLusuario" placeholder="Pega aquí la URL"> <!--URLusuario es la etiqueta que Flask usara para encontrar el valor-->
 <button type="submit">Acortar</button>
 </form>
+</div>
 </body>
 </html>
