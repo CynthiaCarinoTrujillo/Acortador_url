@@ -10,10 +10,12 @@
         body{
             display: flex;
             flex-direction: column;
-            align-items: center ;
+            align-items: center;
             justify-content: center;
-            background: rgba(181, 129, 230, 0.242);
+            background: linear-gradient(135deg, #ffffff 0%, #e3f2fd 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
         }
 
         #header-box, #form-box{
@@ -21,13 +23,26 @@
         }
 
         #header-box{
-            border: 3px solid red;
-            padding: 24px 32px;
-            border-radius: 8px;
+            border: 2px solid #1e88e5;
+            padding: 30px 32px;
+            border-radius: 12px;
             background: #ffffff;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(181, 129, 230, 0.35);
-            margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(30, 136, 229, 0.15);
+            margin-bottom: 30px;
+        }
+        
+        #header-box h1{
+            color: #1e88e5;
+            margin: 0;
+            font-size: 32px;
+            font-weight: 600;
+        }
+        
+        #header-box p{
+            color: #64b5f6;
+            margin: 8px 0 0 0;
+            font-size: 14px;
         }
 
         #form-box{
@@ -35,44 +50,62 @@
         }
 
         #form-box form{
-            border: 3px solid red;
-            border-radius: 8px;
-            padding: 22px 24px;
+            border: 2px solid #1e88e5;
+            border-radius: 12px;
+            padding: 28px 24px;
             background: #ffffff;
-            box-shadow: 0 4px 12px rgba(181, 129, 230, 0.242);
+            box-shadow: 0 4px 15px rgba(30, 136, 229, 0.15);
         }
 
         #form-box input {
             width: 100%;
-            padding: 12px 14px;
-            margin-bottom: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+            border: 1px solid #bbdefb;
+            border-radius: 8px;
             box-sizing: border-box;
+            font-size: 14px;
+            color: #1565c0;
+            transition: border-color 0.3s;
+        }
+        
+        #form-box input:focus {
+            outline: none;
+            border-color: #1e88e5;
+            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
         }
 
         #form-box button {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border: none;
-            border-radius: 6px;
-            background: red;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
             color: white;
             cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        #form-box button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 136, 229, 0.3);
         }
     </style>
     <meta charset="UTF-8">
-    <title>Esto es prueba del acortador</title>
+    <title>LinkRapid - Acortador de URLs</title>
 </head>
 <body>
 <div id="header-box">
-    <h1>Acortador URL</h1>
+    <h1>🔗 LinkRapid</h1>
+    <p>Acorta tus URLs al instante</p>
 </div>
 
 <div id="form-box"> 
-<form method="post"> <!--Indica al navegador que envíe los datos usando POST-->
-<input name="URLusuario" placeholder="Pega aquí la URL"> <!--URLusuario es la etiqueta que Flask usara para encontrar el valor-->
-<button type="submit">Acortar</button>
+<form method="post">
+<input name="URLusuario" placeholder="Pega tu URL aquí">
+<button type="submit">Acortar URL</button>
 </form>
 </div>
 </body>
