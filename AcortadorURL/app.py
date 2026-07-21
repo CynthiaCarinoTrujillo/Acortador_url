@@ -5,6 +5,8 @@ import string
 from urllib.parse import urlparse #para validar URLs
 import sqlite3
 from datetime import datetime
+import os
+
 app= Flask(__name__) #inicializan aplicacion
 urls_dict={} 
 
@@ -74,4 +76,5 @@ def redirigir(codigo):
         return "URL no encontrada", 404
 
 if __name__=='__main__': #comprobamos que si estamos desde el archivo main 
-    app.run(debug=True, port=5000)  #entonces ejecutamos la aplicacion
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=False, port=port, host='0.0.0.0')
