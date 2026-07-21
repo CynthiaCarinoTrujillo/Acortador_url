@@ -63,7 +63,7 @@ def index(): #esto es una vista que se expresa en forma de funcion
         url_corta= generar_url_corta()
         guardar_url(url_corta, url)
         url_corta_completa=f"www.{url_corta}.com"
-        return render_template('resultado.html', url_corta=url_corta)
+        return render_template('resultado.html', url_corta=url_corta, request_host=request.host)
     return render_template('index.html')
 
 @app.route('/<codigo>')
