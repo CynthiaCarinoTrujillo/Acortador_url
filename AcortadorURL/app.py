@@ -2,8 +2,17 @@ from flask import Flask, render_template, request #render_template es una clase 
 #request es el objeto que trae datos enviados por el navegador
 import random
 import string 
+from urllib.parse import urlparse #para validar URLs
 app= Flask(__name__) #inicializando aplicacion
 urls_dict={} #para que es?
+
+def es_url_valida(url): #funcion que valida si la URL es correcta
+    try:
+        resultado = urlparse(url)
+        esquemas_validos = ['http', 'https']
+        return resultado.scheme in esquemas_validos and bool(resultado.netloc)
+    except:
+        return False
 
 def generar_url_corta(): #funcion que genera el url corto
     caracteres = string.ascii_letters + string.digits
@@ -14,6 +23,8 @@ def generar_url_corta(): #funcion que genera el url corto
 def index(): #esto es una vista que se expresa en forma de funcion
     if request.method== 'POST':
         url =request.form['URLusuario']
+        if not es_url_valida(url):
+            return "URL no valida"
         url_corta= generar_url_corta()
         urls_dict[url_corta]= url
         url_corta_completa=f"www.{url_corta}.com"
