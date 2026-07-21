@@ -3,8 +3,10 @@ from flask import Flask, render_template, request #render_template es una clase 
 import random
 import string 
 from urllib.parse import urlparse #para validar URLs
-app= Flask(__name__) #inicializando aplicacion
-urls_dict={} #para que es?
+import sqlite3
+from datetime import datetime
+app= Flask(__name__) #inicializan aplicacion
+urls_dict={} 
 
 def es_url_valida(url): #funcion que valida si la URL es correcta
     try:
@@ -13,6 +15,37 @@ def es_url_valida(url): #funcion que valida si la URL es correcta
         return resultado.scheme in esquemas_validos and bool(resultado.netloc)
     except:
         return False
+    
+def inicializar_bd(): #funcion para la base de datos
+    conexion = sqlite3.connect('urls.db')
+    cursor = conexion.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS urls (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            codigo TEXT UNIQUE NOT NULL,
+            url_original TEXT NOT NULL,
+            fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    conexion.commit()
+    conexion.close()
+
+def guardar_url(codigo, url_original):
+    conexion = sqlite3.connect('urls.db')
+    cursor = conexion.cursor()
+    cursor.execute('INSERT INTO urls (codigo, url_original) VALUES (?, ?)', (codigo, url_original))
+    conexion.commit()
+    conexion.close()
+
+def obtener_url(codigo):
+    conexion = sqlite3.connect('urls.db')
+    cursor = conexion.cursor()
+    cursor.execute('SELECT url_original FROM urls WHERE codigo = ?', (codigo,))
+    resultado = cursor.fetchone()
+    conexion.close()
+    return resultado[0] if resultado else None
+
+inicializar_bd()
 
 def generar_url_corta(): #funcion que genera el url corto
     caracteres = string.ascii_letters + string.digits
@@ -26,16 +59,17 @@ def index(): #esto es una vista que se expresa en forma de funcion
         if not es_url_valida(url):
             return "URL no valida"
         url_corta= generar_url_corta()
-        urls_dict[url_corta]= url
+        guardar_url(url_corta, url)
         url_corta_completa=f"www.{url_corta}.com"
         return render_template('resultado.html', url_corta=url_corta)
     return render_template('index.html')
 
 @app.route('/<codigo>')
 def redirigir(codigo):
-    if codigo in urls_dict:
+    url_original = obtener_url(codigo)
+    if url_original:
         from flask import redirect
-        return redirect(urls_dict[codigo])
+        return redirect(url_original)
     else:
         return "URL no encontrada", 404
 
