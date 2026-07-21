@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <style>
+        html,body{
+            height: 100%;
+            margin:0;
+        }
+
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center ;
+            justify-content: center;
+            background: rgba(181, 129, 230, 0.242);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #header-box, #resultado-box{
+            width: min(90%, 450px);
+        }
+
+        #header-box{
+            border: 3px solid red;
+            padding: 24px 32px;
+            border-radius: 8px;
+            background: #ffffff;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(181, 129, 230, 0.35);
+            margin-bottom: 24px;
+        }
+
+        #resultado-box{
+            text-align: center;
+            border: 3px solid red;
+            border-radius: 8px;
+            padding: 22px 24px;
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(181, 129, 230, 0.242);
+        }
+
+        #resultado-box p{
+            margin: 0 0 15px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        #resultado-box .url-corta{
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            color: red;
+            word-break: break-all;
+            margin-bottom: 15px;
+        }
+
+        #resultado-box a{
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 5px;
+            border: none;
+            border-radius: 6px;
+            background: red;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #resultado-box a:hover{
+            background: darkred;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>URL Acortada</title>
+</head>
+<body>
+<div id="header-box">
+    <h1>✓ URL Acortada</h1>
+</div>
+
+<div id="resultado-box">
+    <p>URL generada</p>
+    <div class="url-corta" id="urlCorta">{{ url_corta }}</div>
+    <button id="copiarBtn" onclick="copiarAlPortapapeles()">📋 Copiar</button>
+    <a href="/">Acortar otra URL</a>
+</div>
+
+<script>
+    function copiarAlPortapapeles() {
+        const urlCorta = document.getElementById('urlCorta').textContent;
+        navigator.clipboard.writeText(urlCorta).then(() => {
+            const btn = document.getElementById('copiarBtn');
+            const textoOriginal = btn.textContent;
+            btn.textContent = '✓ Copiado!';
+            setTimeout(() => {
+                btn.textContent = textoOriginal;
+            }, 2000);
+        });
+    }
+</script>
+</body>
+</html>
