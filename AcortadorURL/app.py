@@ -53,18 +53,25 @@ def generar_url_corta(): #funcion que genera el url corto
     caracteres = string.ascii_letters + string.digits
     return ''.join(random.choice(caracteres)for _ in range(6))
 
+def generar_codigo_unico():
+    while True:
+        codigo = generar_url_corta()
+        if obtener_url(codigo) is None:
+            return codigo
+
 @app.route('/', methods=['GET', 'POST']) #esto es un decorador indicando que es la ruta raiz. Indicamos que acepte GET y POST
 
 def index(): #esto es una vista que se expresa en forma de funcion
+    error = None
     if request.method== 'POST':
         url =request.form['URLusuario']
         if not es_url_valida(url):
-            return "URL no valida"
-        url_corta= generar_url_corta()
-        guardar_url(url_corta, url)
-        url_corta_completa=f"www.{url_corta}.com"
-        return render_template('resultado.html', url_corta=url_corta, request_host=request.host)
-    return render_template('index.html')
+            error = "La URL ingresada no es válida. Asegúrate de incluir http:// o https://"
+        else :
+            url_corta= generar_codigo_unico()
+            guardar_url(url_corta, url)
+            return render_template('resultado.html', url_corta=url_corta, request_host=request.host)
+    return render_template('index.html', error=error)
 
 @app.route('/<codigo>')
 def redirigir(codigo):
