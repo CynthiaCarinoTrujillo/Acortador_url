@@ -94,6 +94,7 @@
         }
     </style>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LinkRapid - Acortador de URLs</title>
 </head>
 <body>
@@ -107,7 +108,7 @@
 <p style="color:#c62828; font-weight:600; margin-bottom:16px; text-align:center;">{{ error }}</p>
 {% endif %}
 <form method="post">
-<input name="URLusuario" placeholder="Pega tu URL aquí">
+<input name="URLusuario" type="url" placeholder="Pega tu URL aquí" required autofocus>
 <button type="submit">Acortar URL</button>
 </form>
 </div>
